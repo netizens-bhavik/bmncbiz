@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateBlackListEmailsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('black_list_emails', function (Blueprint $table) {
+            $table->id();
+            $table->string('email')->unique()->nullable();
+            $table->boolean('is_deleted')->default(0);
+            $table->foreignId('created_by', 'created_by')->nullable()->constrained('users');
+            $table->foreignId('updated_by', 'updated_by')->nullable()->constrained('users');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('black_list_emails');
+    }
+}
